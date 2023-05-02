@@ -1,0 +1,99 @@
+[gd_scene load_steps=12 format=3 uid="uid://bx1vynambud1k"]
+
+[ext_resource type="Script" path="res://Controller.gd" id="1_4xhpu"]
+[ext_resource type="Script" path="res://game.gd" id="1_he4it"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_aomc2"]
+size = Vector3(5, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3rw1u"]
+size = Vector3(5, 1, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_s5501"]
+height = 10.0
+radius = 0.25
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vxwll"]
+albedo_color = Color(0.0941176, 0, 0.639216, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_0wlki"]
+material = SubResource("StandardMaterial3D_vxwll")
+top_radius = 0.25
+bottom_radius = 0.25
+height = 10.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_amefl"]
+height = 10.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gimcj"]
+size = Vector3(100, 1, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8dk5d"]
+albedo_color = Color(0, 0.294118, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_x0uyc"]
+material = SubResource("StandardMaterial3D_8dk5d")
+size = Vector3(100, 1, 20)
+
+[node name="CartPole" type="Node3D"]
+script = ExtResource("1_he4it")
+
+[node name="Cart" type="RigidBody3D" parent="."]
+collision_layer = 2
+collision_mask = 2
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+lock_rotation = true
+script = ExtResource("1_4xhpu")
+forceMultiplier = 30
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Cart"]
+shape = SubResource("BoxShape3D_aomc2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Cart"]
+mesh = SubResource("BoxMesh_3rw1u")
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="Cart"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+node_a = NodePath("..")
+node_b = NodePath("../../Pole")
+
+[node name="Pole" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+collision_layer = 2
+collision_mask = 2
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pole"]
+shape = SubResource("CylinderShape3D_s5501")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pole"]
+mesh = SubResource("CylinderMesh_0wlki")
+
+[node name="Area3D" type="Area3D" parent="Pole"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pole/Area3D"]
+shape = SubResource("CylinderShape3D_amefl")
+
+[node name="Floor" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+freeze = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_gimcj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("BoxMesh_x0uyc")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.755167, 0.655532, 0, -0.655532, 0.755167, 0, 0, 5.31275)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.945774, 0.324825, 0, -0.324825, 0.945774, 0, 11.6155, 21.9127)
+
+[connection signal="body_entered" from="Pole/Area3D" to="." method="_on_area_3d_body_entered"]
