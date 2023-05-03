@@ -3,7 +3,12 @@ extends AIController3D
 @onready var force_x = 0
 
 func get_obs() -> Dictionary:
-	return {"obs":[_cart.pole.global_rotation.z]}
+	return {"obs":[
+		_cart.pole.global_rotation.z,
+		_cart.pole.angular_velocity.z,
+		_cart.position.x,
+		_cart.linear_velocity.x
+	]}
 
 func get_reward() -> float:
 	return _cart.cart_pole.elapsed_time
