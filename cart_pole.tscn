@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bx1vynambud1k"]
+[gd_scene load_steps=16 format=3 uid="uid://bx1vynambud1k"]
 
 [ext_resource type="Script" path="res://Controller.gd" id="1_4xhpu"]
 [ext_resource type="Script" path="res://game.gd" id="1_he4it"]
@@ -36,6 +36,12 @@ albedo_color = Color(0, 0.294118, 0, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_x0uyc"]
 material = SubResource("StandardMaterial3D_8dk5d")
 size = Vector3(100, 1, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uoagv"]
+size = Vector3(1, 10, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qdx37"]
+size = Vector3(1, 10, 20)
 
 [node name="CartPole" type="Node3D"]
 script = ExtResource("1_he4it")
@@ -94,11 +100,30 @@ shape = SubResource("BoxShape3D_gimcj")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
 mesh = SubResource("BoxMesh_x0uyc")
 
+[node name="LeftWall" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 4, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftWall"]
+shape = SubResource("BoxShape3D_uoagv")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LeftWall"]
+mesh = SubResource("BoxMesh_qdx37")
+
+[node name="RightWall" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 4, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RightWall"]
+shape = SubResource("BoxShape3D_uoagv")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RightWall"]
+mesh = SubResource("BoxMesh_qdx37")
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.755167, 0.655532, 0, -0.655532, 0.755167, 0, 0, 5.31275)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.945774, 0.324825, 0, -0.324825, 0.945774, 0, 11.6155, 21.9127)
+transform = Transform3D(1, 0, 0, 0, 0.59031, 0.807176, 0, -0.807176, 0.59031, 0, 28.7301, 14.718)
+fov = 140.0
 
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("4_2a275")
