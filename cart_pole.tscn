@@ -1,7 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://bx1vynambud1k"]
+[gd_scene load_steps=14 format=3 uid="uid://bx1vynambud1k"]
 
 [ext_resource type="Script" path="res://Controller.gd" id="1_4xhpu"]
 [ext_resource type="Script" path="res://game.gd" id="1_he4it"]
+[ext_resource type="Script" path="res://AIController.gd" id="3_kc34v"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="4_2a275"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_aomc2"]
 size = Vector3(5, 1, 1)
@@ -48,7 +50,6 @@ axis_lock_angular_y = true
 axis_lock_angular_z = true
 lock_rotation = true
 script = ExtResource("1_4xhpu")
-forceMultiplier = 30
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cart"]
 shape = SubResource("BoxShape3D_aomc2")
@@ -60,6 +61,9 @@ mesh = SubResource("BoxMesh_3rw1u")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 node_a = NodePath("..")
 node_b = NodePath("../../Pole")
+
+[node name="AIController3D" type="Node" parent="Cart"]
+script = ExtResource("3_kc34v")
 
 [node name="Pole" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
@@ -95,5 +99,9 @@ transform = Transform3D(1, 0, 0, 0, 0.755167, 0.655532, 0, -0.655532, 0.755167, 
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.945774, 0.324825, 0, -0.324825, 0.945774, 0, 11.6155, 21.9127)
+
+[node name="Sync" type="Node" parent="."]
+script = ExtResource("4_2a275")
+speed_up = 20
 
 [connection signal="body_entered" from="Pole/Area3D" to="." method="_on_area_3d_body_entered"]
