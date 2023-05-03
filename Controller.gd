@@ -5,7 +5,7 @@ extends RigidBody3D
 @onready var cart_pole = $"../../CartPole"
 
 @onready var force: Vector3 = Vector3.ZERO
-@export var force_multiplier = 20
+@export var force_multiplier = 30
 
 func _ready():
 	ai_controller.init(self)
@@ -35,4 +35,4 @@ func _physics_process(delta):
 	
 func nudge():
 	var random_force = Vector3(randf_range(-1,1),0,0)
-	apply_central_force(random_force * force_multiplier)
+	apply_central_force(random_force * force_multiplier / 2)

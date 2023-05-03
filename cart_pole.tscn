@@ -122,11 +122,10 @@ mesh = SubResource("BoxMesh_qdx37")
 transform = Transform3D(1, 0, 0, 0, 0.755167, 0.655532, 0, -0.655532, 0.755167, 0, 0, 5.31275)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.59031, 0.807176, 0, -0.807176, 0.59031, 0, 28.7301, 14.718)
-fov = 140.0
+transform = Transform3D(1, 0, 0, 0, 0.657007, 0.753884, 0, -0.753884, 0.657007, 0, 27.6141, 26.2952)
 
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("4_2a275")
-speed_up = 20
+speed_up = 30
 
 [connection signal="body_entered" from="Pole/Area3D" to="." method="_on_area_3d_body_entered"]
