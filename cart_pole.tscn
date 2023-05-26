@@ -1,8 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://bx1vynambud1k"]
+[gd_scene load_steps=16 format=3 uid="uid://domh81ih431a7"]
 
 [ext_resource type="Script" path="res://Controller.gd" id="1_4xhpu"]
 [ext_resource type="Script" path="res://game.gd" id="1_he4it"]
-[ext_resource type="Script" path="res://AIController.gd" id="3_kc34v"]
+[ext_resource type="Script" path="res://agent.gd" id="3_o3qia"]
 [ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="4_2a275"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_aomc2"]
@@ -69,7 +69,7 @@ node_a = NodePath("..")
 node_b = NodePath("../../Pole")
 
 [node name="AIController3D" type="Node" parent="Cart"]
-script = ExtResource("3_kc34v")
+script = ExtResource("3_o3qia")
 
 [node name="Pole" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
